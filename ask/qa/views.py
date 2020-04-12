@@ -6,3 +6,6 @@ def test(request, *args, **kwargs):
 
 def login(request, *args, **kwargs):
     return HttpResponse('OK login page')
+
+def question(request, *args, **kwargs):
+    return HttpResponse('OK question page')
