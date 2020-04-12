@@ -25,7 +25,7 @@ SECRET_KEY = 'wgw&1jdsh7=wp$_^mu+m2)0g%=kn+11wosvc5a$zu#1k1@tfq%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
