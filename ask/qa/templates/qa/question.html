@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .answers {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0px;
+    }
+</style>
+<body>
+    <h1>{{question.title}}</h1>
+    <div>{{question.text}}</div>
+    <div class='answers'>
+            {% for a in answers %}
+            <span>{{ a.text }}</span>
+            {% endfor %}
+        </div>
+</body>
+</html>
