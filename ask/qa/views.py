@@ -7,7 +7,9 @@ from django.shortcuts import get_object_or_404, render
 
 
 def new_questions(request):
-    page = request.GET.get('page','')
+    page = request.GET.get('page', None)
+    if page is None:
+        return HttpResponse('OK')
     questions = models.Question.objects.new()
     limit = request.GET.get('limit', 10)
     page = request.GET.get('page', page)
