@@ -5,8 +5,19 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
-def test(request, *args, **kwargs):
-    return HttpResponse('OK')
+def popular_questions(request):
+    page = request.GET.get('page','')
+    questions = models.Question.objects.popular()
+    limit = request.GET.get('limit', 2)
+    page = request.GET.get('page', page)
+    paginator = Paginator(questions, limit)
+    paginator.baseurl = '?page='
+    page = paginator.page(page)
+    return render(request, 'qa/popular_questions.html', {
+        'questions': page.object_list,
+        'paginator': paginator,
+        'page': page
+    })
 
 def question(request, id):
     question = get_object_or_404(models.Question, id=id)

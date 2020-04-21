@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 
 class QuestionManager(models.Manager):
@@ -18,6 +19,9 @@ class Question (models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     likes = models.ManyToManyField(User, related_name='likes_set')
     objects = QuestionManager()
+
+    def get_url(self):
+        return reverse('question', kwargs={'id': self.id})
 
 
 class Answer (models.Model):

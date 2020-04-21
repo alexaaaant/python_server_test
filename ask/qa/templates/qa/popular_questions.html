@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    .questions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .active {
+        background-color: red;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: space-around;
+    }
+</style>
+
+<body>
+    <div class='questions'>
+        {% for q in questions %}
+        <span>{{ q.title }}</span>
+        <a href="{{ q.get_url }}">link</a>
+        {% endfor %}
+    </div>
+    <nav>
+        <div class="pagination">
+            {% for p in paginator.page_range %}
+            {% if p == page.number %}
+            <div class="active">
+                {% else %}
+                <div>
+                    {% endif %}
+                    <a href="{{ paginator.baseurl }}{{ p }}">{{p}}</a>
+                </div>
+                {% endfor %}
+            </div>
+    </nav>
+</body>
+
+</html>
