@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +14,21 @@
         margin: 10px 0px;
     }
 </style>
+
 <body>
     <h1>{{question.title}}</h1>
     <div>{{question.text}}</div>
     <div class='answers'>
-            {% for a in answers %}
-            <span>{{ a.text }}</span>
-            {% endfor %}
-        </div>
+        {% for a in answers %}
+        <span>{{ a.text }}</span>
+        {% endfor %}
+    </div>
+    {% if error_message %}<p>{{ error_message }}</p>{% endif %}
+    <form action="{{question.get_url}}" method="post">
+        {% csrf_token %}
+        <p><textarea rows="10" cols="45" name="text"></textarea></p>
+        <p><input type="submit" value="Answer"></p>
+    </form>
 </body>
+
 </html>

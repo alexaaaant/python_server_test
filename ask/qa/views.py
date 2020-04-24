@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from . import models
+from . import forms
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
@@ -22,7 +23,7 @@ def new_questions(request):
 
 
 def popular_questions(request):
-    page = request.GET.get('page',1)
+    page = request.GET.get('page', 1)
     questions = models.Question.objects.popular()
     limit = request.GET.get('limit', 10)
     page = request.GET.get('page', page)
@@ -35,10 +36,19 @@ def popular_questions(request):
         'page': page
     })
 
+
 def question(request, id):
-    question = get_object_or_404(models.Question, id=id)
-    answers = models.Answer.objects.filter(question_id=id)[:]
-    return render(request, 'qa/question.html', {
-        'question': question,
-        'answers': answers
-    })
+    if request.method == "POST":
+        d = request.POST.copy()
+        d["question"] = id
+        form = forms.AnswerForm(d)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(request.path)
+    else:
+        question = get_object_or_404(models.Question, id=id)
+        answers = models.Answer.objects.filter(question_id=id)[:]
+        return render(request, 'qa/question.html', {
+            'question': question,
+            'answers': answers
+        })
