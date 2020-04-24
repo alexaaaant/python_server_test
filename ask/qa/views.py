@@ -52,3 +52,12 @@ def question(request, id):
             'question': question,
             'answers': answers
         })
+
+
+def ask(request):
+    if request.method == "POST":
+        form = forms.AskForm(request.POST)
+        if form.is_valid():
+            q = form.save()
+            return HttpResponseRedirect(q.get_url())
+    return render(request, 'qa/ask.html')

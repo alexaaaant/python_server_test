@@ -6,6 +6,7 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^$', views.new_questions, name='new_questions'),
     url(r'popular/$', views.popular_questions, name='popular_questions'),
+    url(r'ask/$', views.ask, name='ask'),
     url(r'question/(?P<id>\d+)/$', views.question, name='question'),
     # url(r'login/', views.test, name='test'),
     # url(r'signup/', views.test, name='test'),
