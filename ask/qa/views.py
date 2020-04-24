@@ -44,14 +44,12 @@ def question(request, id):
         form = forms.AnswerForm(d)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(request.path)
-    else:
-        question = get_object_or_404(models.Question, id=id)
-        answers = models.Answer.objects.filter(question_id=id)[:]
-        return render(request, 'qa/question.html', {
-            'question': question,
-            'answers': answers
-        })
+    question = get_object_or_404(models.Question, id=id)
+    answers = models.Answer.objects.filter(question_id=id)[:]
+    return render(request, 'qa/question.html', {
+        'question': question,
+        'answers': answers
+    })
 
 
 def ask(request):

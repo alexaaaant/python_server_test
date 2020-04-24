@@ -21,7 +21,7 @@ class AskForm(forms.Form):
 
 
 class AnswerForm(forms.Form):
-    question = forms.CharField(max_length=100)
+    question = forms.IntegerField()
     text = forms.CharField(widget=forms.Textarea)
 
     def clean(self):
