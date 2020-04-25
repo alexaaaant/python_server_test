@@ -62,6 +62,25 @@ def ask(request):
             return HttpResponseRedirect(q.get_url())
     return render(request, 'qa/ask.html')
 
+
+def signup(request):
+    error = ''
+    if request.method == "POST":
+        form = forms.SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            sessid = helper.do_login(user.username, user.password)
+            if sessid:
+                response = HttpResponseRedirect('/')
+                response.set_cookie('sessionid', sessid)
+                return response
+            else:
+                error = 'some errorr'
+        else:
+            error = 'some error'
+    return render(request, 'qa/signup.html', {'error': error})
+
+
 def login(request):
     error = ''
     if request.method == "POST":
@@ -75,5 +94,3 @@ def login(request):
         else:
             error = 'some error'
     return render(request, 'qa/login.html', {'error': error})
-
-
