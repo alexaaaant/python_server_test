@@ -44,7 +44,10 @@ def question(request, id):
         d = request.POST.copy()
         d["question"] = id
         form = forms.AnswerForm(d)
-        if form.is_valid():
+        key = request.COOKIES.get('sessionid')
+        if form.is_valid() and key:
+            session = models.Session.objects.get(key=key)
+            form._user = session.user
             form.save()
     question = get_object_or_404(models.Question, id=id)
     answers = models.Answer.objects.filter(question_id=id)[:]
@@ -57,7 +60,10 @@ def question(request, id):
 def ask(request):
     if request.method == "POST":
         form = forms.AskForm(request.POST)
-        if form.is_valid():
+        key = request.COOKIES.get('sessionid')
+        if form.is_valid() and key:
+            session = models.Session.objects.get(key=key)
+            form._user = session.user
             q = form.save()
             return HttpResponseRedirect(q.get_url())
     return render(request, 'qa/ask.html')

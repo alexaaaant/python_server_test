@@ -15,7 +15,7 @@ class AskForm(forms.Form):
     def save(self):
         title = self.cleaned_data.get("title")
         text = self.cleaned_data.get("text")
-        question = models.Question(title=title, text=text)
+        question = models.Question(title=title, text=text, author=self._user)
         question.save()
         return question
 
@@ -33,7 +33,7 @@ class AnswerForm(forms.Form):
     def save(self):
         question = self.cleaned_data.get("question")
         text = self.cleaned_data.get("text")
-        answer = models.Answer(text=text, question_id=question)
+        answer = models.Answer(text=text, question_id=question, author=self._user)
         answer.save()
         return answer
 
