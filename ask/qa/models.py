@@ -1,7 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
 # Create your models here.
+
+class User(models.Model):
+    username = models.CharField(unique=True, max_length=100)
+    password = models.CharField(max_length=100)
+    email = models.EmailField()
 
 class QuestionManager(models.Manager):
     def new(self):
@@ -29,3 +33,8 @@ class Answer (models.Model):
     added_at = models.DateTimeField(blank=True, auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.PROTECT)
     author = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+
+class Session(models.Model):
+    key = models.CharField(unique=True, max_length=500)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    expires = models.DateTimeField()
